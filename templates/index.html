@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Retention Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Student Retention Prediction</h1>
+            <p class="subtitle">Predict whether a student will be retained based on their data.</p>
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="name">Student Name:</label>
+                <input type="text" id="name" placeholder="Enter student's name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age (1-120):</label>
+                <input type="range" id="age" min="1" max="120" step="1" value="18">
+                <span id="ageValue">18</span>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance_rate">Attendance Rate (0-100%):</label>
+                <input type="range" id="attendance_rate" min="0" max="100" step="1" value="0">
+                <span id="attendanceRateValue">0</span>
+            </div>
+
+            <div class="form-group">
+                <label for="academic_percentage">Academic Percentage (0-100%):</label>
+                <input type="range" id="academic_percentage" min="0" max="100" step="1" value="0">
+                <span id="academicPercentageValue">0</span>
+            </div>
+
+            <div class="form-group">
+                <label for="activities_participation">Activities Participation:</label>
+                <select id="activities_participation">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Predict</button>
+                <button type="button" id="clearButton">Clear Form</button>
+            </div>
+        </form>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading-spinner"></div>
+
+        <!-- Result and Summary -->
+        <div id="result"></div>
+        <div id="summary"></div>
+
+        <!-- Download Report Button -->
+        <button id="downloadButton" class="download-button">Download Report</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

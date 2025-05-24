@@ -1,0 +1,88 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #10b981;
+    --danger: #ef4444;
+    --background: #f8fafc;
+    --text: #1e293b;
+    --success-bg: #dcfce7;
+    --danger-bg: #fee2e2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    width: fit-content;
+    margin: 0.5rem auto;
+}
+
+.status-retained {
+    background: var(--success-bg);
+    color: #166534;
+}
+
+.status-not-retained {
+    background: var(--danger-bg);
+    color: #991b1b;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+input[type="range"] {
+    accent-color: var(--primary);
+}
+
+button {
+    background: var(--primary);
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.download-button {
+    background: var(--secondary);
+}
+
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    display: none;
+    margin: 1rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
