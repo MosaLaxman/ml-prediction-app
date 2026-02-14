@@ -2,6 +2,8 @@
 
 A Flask-based machine learning web app that predicts student retention and provides actionable intervention guidance.
 
+Live App: `https://ml-prediction-app-5g48.onrender.com/`
+
 ## Features
 
 - Professional dashboard UI with responsive design and modern styling
