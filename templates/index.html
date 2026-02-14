@@ -3,66 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Retention Prediction</title>
+    <title>Student Retention Intelligence Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Student Retention Prediction</h1>
-            <p class="subtitle">Predict whether a student will be retained based on their data.</p>
-        </div>
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
-        <form id="predictionForm">
-            <div class="form-group">
-                <label for="name">Student Name:</label>
-                <input type="text" id="name" placeholder="Enter student's name" required>
+    <main class="page">
+        <header class="hero">
+            <p class="eyebrow">Academic Success Analytics</p>
+            <h1>Student Retention Intelligence Dashboard</h1>
+            <p class="subtitle">Predict retention risk, identify intervention opportunities, and export decision-ready summaries.</p>
+        </header>
+
+        <section class="panel form-panel">
+            <h2>Student Profile Input</h2>
+            <form id="predictionForm">
+                <div class="grid two-col">
+                    <div class="form-group full-width">
+                        <label for="name">Student Name</label>
+                        <input type="text" id="name" placeholder="Enter student full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age <span id="ageValue" class="value-pill">18</span></label>
+                        <input type="range" id="age" min="1" max="120" step="1" value="18">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attendance_rate">Attendance % <span id="attendanceRateValue" class="value-pill">75</span></label>
+                        <input type="range" id="attendance_rate" min="0" max="100" step="1" value="75">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="academic_percentage">Academic % <span id="academicPercentageValue" class="value-pill">70</span></label>
+                        <input type="range" id="academic_percentage" min="0" max="100" step="1" value="70">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activities_participation">Extracurricular Participation</label>
+                        <select id="activities_participation">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="preset-row">
+                    <button type="button" class="ghost-btn preset-btn" data-preset="high-risk">Load High-Risk Profile</button>
+                    <button type="button" class="ghost-btn preset-btn" data-preset="improving">Load Improving Profile</button>
+                    <button type="button" class="ghost-btn preset-btn" data-preset="high-performing">Load High-Performing Profile</button>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="primary-btn">Run Prediction</button>
+                    <button type="button" id="clearButton" class="secondary-btn">Clear</button>
+                    <button type="button" id="downloadButton" class="ghost-btn">Download Report</button>
+                    <button type="button" id="exportHistoryButton" class="ghost-btn">Export History CSV</button>
+                </div>
+            </form>
+
+            <div id="loading" class="loading-row" aria-live="polite">
+                <div class="loading-spinner"></div>
+                <span>Running prediction...</span>
             </div>
+            <div id="errorMessage" class="error-message"></div>
+        </section>
 
-            <div class="form-group">
-                <label for="age">Age (1-120):</label>
-                <input type="range" id="age" min="1" max="120" step="1" value="18">
-                <span id="ageValue">18</span>
+        <section class="panel output-panel">
+            <h2>Prediction Result</h2>
+            <div id="result" class="result-placeholder">Submit a profile to view retention insights.</div>
+            <div id="summary"></div>
+            <ul id="recommendations" class="recommendations-list"></ul>
+        </section>
+
+        <section class="panel history-panel">
+            <h2>Recent Predictions</h2>
+            <div class="history-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Probability</th>
+                        <th>Risk</th>
+                    </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                    <tr>
+                        <td colspan="4" class="empty-history">No predictions yet.</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="form-group">
-                <label for="attendance_rate">Attendance Rate (0-100%):</label>
-                <input type="range" id="attendance_rate" min="0" max="100" step="1" value="0">
-                <span id="attendanceRateValue">0</span>
-            </div>
-
-            <div class="form-group">
-                <label for="academic_percentage">Academic Percentage (0-100%):</label>
-                <input type="range" id="academic_percentage" min="0" max="100" step="1" value="0">
-                <span id="academicPercentageValue">0</span>
-            </div>
-
-            <div class="form-group">
-                <label for="activities_participation">Activities Participation:</label>
-                <select id="activities_participation">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-
-            <div class="button-group">
-                <button type="submit">Predict</button>
-                <button type="button" id="clearButton">Clear Form</button>
-            </div>
-        </form>
-
-        <!-- Loading Spinner -->
-        <div id="loading" class="loading-spinner"></div>
-
-        <!-- Result and Summary -->
-        <div id="result"></div>
-        <div id="summary"></div>
-
-        <!-- Download Report Button -->
-        <button id="downloadButton" class="download-button">Download Report</button>
-    </div>
-
+        </section>
+    </main>
+    <footer class="footer-note">
+        <small>For decision support only. Final retention decisions should include advisor review.</small>
+    </footer>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
